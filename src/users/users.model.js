@@ -19,16 +19,19 @@ const Users = newSeq.define(
     },
     no_hp: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     role: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     verified: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: 0,
     },
     file_ktp: {
       type: DataTypes.STRING,
@@ -65,6 +68,25 @@ export const createUser = async (un, em, pw, hp, add, rol, ver, ktp, pp) => {
   });
   console.log(un, "'s id: ", create.id);
   return create.id;
+};
+
+export const getUserbyName = async (un) => {
+  const allUser = await Users.findOne({
+    where: {
+      name: un,
+    },
+  });
+  return allUser;
+};
+
+export const getUserMitraUnverified = async () => {
+  const allUser = await Users.findAll({
+    where: {
+      role: "mitra",
+      verified: 0,
+    },
+  });
+  return allUser;
 };
 
 export default Users;
