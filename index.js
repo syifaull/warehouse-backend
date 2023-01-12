@@ -1,5 +1,4 @@
 import express from "express";
-//const express = require("express");
 import "./src/configs/env.js";
 
 const app = express();
