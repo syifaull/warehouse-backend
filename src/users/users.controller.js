@@ -1,5 +1,6 @@
 import {
   createUser,
+  getUserbyID,
   getUserMitraUnverified,
   getUserMitraVerified,
 } from "./users.model.js";
@@ -66,6 +67,29 @@ export const getMitraVerifiedRest = async (req, res) => {
     meta: {
       code: 200,
       message: "Success get verified mitra",
+    },
+    data: { respModel },
+  });
+};
+
+export const getMitrabyIDRest = async (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).json({
+      meta: {
+        code: 400,
+        message: "Some input are required",
+      },
+      data: {},
+    });
+  }
+
+  const respModel = await getUserbyID(id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get detail mitra",
     },
     data: { respModel },
   });

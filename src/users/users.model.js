@@ -103,4 +103,14 @@ export const getUserMitraVerified = async () => {
   return allUser;
 };
 
+// get detail mitra
+export const getUserbyID = async (id) => {
+  const allUser = await Users.findOne({
+    where: {
+      id: id,
+    },
+  });
+  return allUser;
+};
+
 export default Users;
