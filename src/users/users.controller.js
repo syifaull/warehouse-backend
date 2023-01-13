@@ -1,4 +1,8 @@
-import { createUser, getUserMitraUnverified } from "./users.model.js";
+import {
+  createUser,
+  getUserMitraUnverified,
+  getUserMitraVerified,
+} from "./users.model.js";
 
 export const createUserRest = async (req, res) => {
   const {
@@ -50,7 +54,18 @@ export const getMitraUnverifiedRest = async (req, res) => {
   return res.status(200).json({
     meta: {
       code: 200,
-      message: "Success get unverified users",
+      message: "Success get unverified mitra",
+    },
+    data: { respModel },
+  });
+};
+
+export const getMitraVerifiedRest = async (req, res) => {
+  const respModel = await getUserMitraVerified();
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get verified mitra",
     },
     data: { respModel },
   });

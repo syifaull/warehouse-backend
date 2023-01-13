@@ -49,14 +49,11 @@ export const authLogin = async (req, res) => {
       },
     });
   }
-  return (
-    res.status(400),
-    json({
-      meta: {
-        code: 400,
-        message: "Wrong password",
-      },
-      data: {},
-    })
-  );
+  return res.status(400).json({
+    meta: {
+      code: 400,
+      message: "Wrong password",
+    },
+    data: {},
+  });
 };

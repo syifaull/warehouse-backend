@@ -30,8 +30,8 @@ const Users = newSeq.define(
       allowNull: false,
     },
     verified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 0,
+      type: DataTypes.STRING,
+      defaultValue: "unverified",
     },
     file_ktp: {
       type: DataTypes.STRING,
@@ -54,6 +54,7 @@ newSeq
     console.error("Unable to create table: ", error);
   });
 
+// register
 export const createUser = async (un, em, pw, hp, add, rol, ver, ktp, pp) => {
   const create = await Users.create({
     name: un,
@@ -70,6 +71,7 @@ export const createUser = async (un, em, pw, hp, add, rol, ver, ktp, pp) => {
   return create.id;
 };
 
+// auth login
 export const getUserbyName = async (un) => {
   const allUser = await Users.findOne({
     where: {
@@ -79,11 +81,23 @@ export const getUserbyName = async (un) => {
   return allUser;
 };
 
+// get unverified mitra
 export const getUserMitraUnverified = async () => {
   const allUser = await Users.findAll({
     where: {
       role: "mitra",
-      verified: 0,
+      verified: "unverified",
+    },
+  });
+  return allUser;
+};
+
+// get verified mitra
+export const getUserMitraVerified = async () => {
+  const allUser = await Users.findAll({
+    where: {
+      role: "mitra",
+      verified: "verified",
     },
   });
   return allUser;
