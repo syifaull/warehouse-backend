@@ -113,4 +113,34 @@ export const getUserbyID = async (id) => {
   return allUser;
 };
 
+// // get profil mitra
+// export const getProfileMitra = async (id) => {
+//   const allUser = await Users.findOne({
+//     where: {
+//       id: id,
+//     },
+//   });
+//   return allUser;
+// };
+
+// //edit verified mitra
+// export const editVerified = async (ver, id) => {
+//   const edit = await Users.update({
+//     verified: ver,
+//     where: {
+//       id: id,
+//     },
+//   });
+//   return edit;
+// };
+
+// delete akun mitra
+export const deleteMitra = async (id) => {
+  await Users.destroy({
+    where: {
+      id: id,
+    },
+  });
+};
+
 export default Users;
