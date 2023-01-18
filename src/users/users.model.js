@@ -10,7 +10,7 @@ const Users = newSeq.define(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
       unique: true,
     },
     password: {
@@ -54,7 +54,10 @@ newSeq
     console.error("Unable to create table: ", error);
   });
 
-// register
+// Users.associate = (models) => {
+//   Users.hasOne(models.gudang);
+// };
+
 export const createUser = async (un, em, pw, hp, add, rol, ver, ktp, pp) => {
   const create = await Users.create({
     name: un,
@@ -81,7 +84,6 @@ export const getUserbyName = async (un) => {
   return allUser;
 };
 
-// get unverified mitra
 export const getUserMitraUnverified = async () => {
   const allUser = await Users.findAll({
     where: {
@@ -92,7 +94,6 @@ export const getUserMitraUnverified = async () => {
   return allUser;
 };
 
-// get verified mitra
 export const getUserMitraVerified = async () => {
   const allUser = await Users.findAll({
     where: {
@@ -103,7 +104,6 @@ export const getUserMitraVerified = async () => {
   return allUser;
 };
 
-// get detail mitra
 export const getUserbyID = async (id) => {
   const allUser = await Users.findOne({
     where: {
@@ -113,17 +113,15 @@ export const getUserbyID = async (id) => {
   return allUser;
 };
 
-// // get profil mitra
-// export const getProfileMitra = async (id) => {
-//   const allUser = await Users.findOne({
-//     where: {
-//       id: id,
-//     },
-//   });
-//   return allUser;
-// };
+export const getProfileMitra = async (id) => {
+  const allUser = await Users.findOne({
+    where: {
+      id: id,
+    },
+  });
+  return allUser;
+};
 
-// //edit verified mitra
 // export const editVerified = async (ver, id) => {
 //   const edit = await Users.update({
 //     verified: ver,
@@ -134,13 +132,44 @@ export const getUserbyID = async (id) => {
 //   return edit;
 // };
 
-// delete akun mitra
+export const getProfilePenitip = async (id) => {
+  const allUser = await Users.findOne({
+    where: {
+      id: id,
+    },
+  });
+  return allUser;
+};
+
 export const deleteMitra = async (id) => {
   await Users.destroy({
     where: {
       id: id,
     },
   });
+};
+
+export const deletePenitip = async (id) => {
+  await Users.destroy({
+    where: {
+      id: id,
+    },
+  });
+};
+
+export const editProfileMitra = async (un, em, pw, hp, add, pp, id) => {
+  const edit = await Users.update({
+    name: un,
+    email: em,
+    password: pw,
+    no_hp: hp,
+    address: add,
+    profile_photo: pp,
+    where: {
+      id: id,
+    },
+  });
+  return edit;
 };
 
 export default Users;

@@ -34,7 +34,7 @@ export const authLogin = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "3h",
+        expiresIn: "10h",
       }
     );
     return res.status(200).json({

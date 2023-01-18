@@ -1,11 +1,17 @@
+import JSONtoken from "jsonwebtoken";
 import {
   createUser,
   deleteMitra,
+  deletePenitip,
+  editProfileMitra,
+  getProfileMitra,
+  getProfilePenitip,
   getUserbyID,
   getUserMitraUnverified,
   getUserMitraVerified,
 } from "./users.model.js";
 
+// register
 export const createUserRest = async (req, res) => {
   const {
     name,
@@ -51,6 +57,7 @@ export const createUserRest = async (req, res) => {
   });
 };
 
+// get unverified mitra
 export const getMitraUnverifiedRest = async (req, res) => {
   const respModel = await getUserMitraUnverified();
   return res.status(200).json({
@@ -62,6 +69,7 @@ export const getMitraUnverifiedRest = async (req, res) => {
   });
 };
 
+// get verified mitra
 export const getMitraVerifiedRest = async (req, res) => {
   const respModel = await getUserMitraVerified();
   return res.status(200).json({
@@ -73,6 +81,7 @@ export const getMitraVerifiedRest = async (req, res) => {
   });
 };
 
+// get detail mitra
 export const getMitrabyIDRest = async (req, res) => {
   const id = req.params.id;
 
@@ -96,29 +105,24 @@ export const getMitrabyIDRest = async (req, res) => {
   });
 };
 
-// export const getProfileMitraRest = async (req, res) => {
-//   const user = await getProfileMitra(id);
+// get profil mitra
+export const getProfileMitraRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const id = bearer[1];
+  const decode = JSONtoken.verify(id, process.env.JWT_SECRET);
 
-//   if (!user) {
-//     return res.status(404).json({
-//       meta: {
-//         code: 404,
-//         message: "ID not found",
-//       },
-//       data: {},
-//     });
-//   }
+  const respModel = await getProfileMitra(decode.id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get profile mitra",
+    },
+    data: { respModel },
+  });
+};
 
-//   const respModel = await getProfileMitra();
-//   return res.status(200).json({
-//     meta: {
-//       code: 200,
-//       message: "Success get profile mitra",
-//     },
-//     data: { respModel },
-//   });
-// };
-
+// //edit verified mitra
 // export const editVerifiedRest = async (req, res) => {
 //   const { verified } = req.body;
 //   const id = req.params.id;
@@ -142,6 +146,24 @@ export const getMitrabyIDRest = async (req, res) => {
 //   });
 // };
 
+// get profil penitip
+export const getProfilePenitipRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const id = bearer[1];
+  const decode = JSONtoken.verify(id, process.env.JWT_SECRET);
+
+  const respModel = await getProfilePenitip(decode.id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get profile penitip",
+    },
+    data: { respModel },
+  });
+};
+
+// delete akun mitra
 export const deleteMitraRest = async (req, res) => {
   const id = req.params.id;
 
@@ -151,5 +173,48 @@ export const deleteMitraRest = async (req, res) => {
       code: 200,
       message: "Success delete mitra",
     },
+  });
+};
+
+// delete akun penitip
+export const deletePenitipRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const id = bearer[1];
+  const decode = JSONtoken.verify(id, process.env.JWT_SECRET);
+
+  deletePenitip(decode.id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success delete account",
+    },
+  });
+};
+
+//edit profile mitra
+export const editProfileMitraRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const decode = bearer[1];
+  const id = JSONtoken.verify(decode, process.env.JWT_SECRET).id;
+
+  const { name, email, password, no_hp, address, profile_photo } = req.body;
+
+  const respModel = await editProfileMitra(
+    id,
+    name,
+    email,
+    password,
+    no_hp,
+    address,
+    profile_photo
+  );
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success set status mitra",
+    },
+    data: { respModel },
   });
 };
