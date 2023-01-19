@@ -41,15 +41,7 @@ newSeq
     console.error("Unable to create table: ", error);
   });
 
-// Users.hasOne(Gudang);
-// Gudang.belongsTo(Users);
-// Gudang.associate = (models) => {
-//   Gudang.belongsTo(models.user);
-// };
-
 export const createGudang = async (nam, loc, us_id, lat, long) => {
-  // Gudang.belongsTo(Users);
-
   const create = await Gudang.create({
     name: nam,
     location: loc,
@@ -73,6 +65,24 @@ export const getGudangID = async (us_id) => {
       user_id: us_id,
     },
   });
+  return allUser;
+};
+
+// update gudang
+export const updateGudang = async (us_id, nam, loc, lat, long) => {
+  const allUser = await Gudang.update(
+    {
+      name: nam,
+      location: loc,
+      latitude: lat,
+      longitude: long,
+    },
+    {
+      where: {
+        user_id: us_id,
+      },
+    }
+  );
   return allUser;
 };
 

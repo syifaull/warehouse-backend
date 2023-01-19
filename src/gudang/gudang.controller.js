@@ -1,5 +1,5 @@
 import JSONtoken from "jsonwebtoken";
-import { createGudang, getAllGudang } from "./gudang.model.js";
+import { createGudang, getAllGudang, updateGudang } from "./gudang.model.js";
 
 // add new gudang
 export const createGudangRest = async (req, res) => {
@@ -43,6 +43,29 @@ export const getAllGudangRest = async (req, res) => {
     meta: {
       code: 200,
       message: "Success get all gudang",
+    },
+    data: { respModel },
+  });
+};
+
+export const updateGudangRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const token = bearer[1];
+  const us_id = JSONtoken.verify(token, process.env.JWT_SECRET).id;
+  const { name, location, latitude, longitude } = req.body;
+
+  const respModel = await updateGudang(
+    us_id,
+    name,
+    location,
+    latitude,
+    longitude
+  );
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success update gudang",
     },
     data: { respModel },
   });

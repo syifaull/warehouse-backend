@@ -42,4 +42,20 @@ export const createFavorite = async (user_id, lahan_id) => {
   return create.id;
 };
 
+export const getFavorite = async (id) => {
+  const allUser = await Favorites.findAll({
+    where: {
+      user_id: id,
+    },
+    include: [
+      {
+        model: lahans,
+        as: "lahan",
+        attributes: "name",
+      },
+    ],
+  });
+  return allUser;
+};
+
 export default Favorites;

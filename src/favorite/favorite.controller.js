@@ -31,3 +31,19 @@ export const createFavoriteRest = async (req, res) => {
     },
   });
 };
+
+export const getFavoriteRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const token = bearer[1];
+  const id = JSONtoken.verify(token, process.env.JWT_SECRET).id;
+
+  const respModel = await getFavorite(id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get favorite lahan",
+    },
+    data: { respModel },
+  });
+};
