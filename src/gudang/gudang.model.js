@@ -66,4 +66,14 @@ export const getAllGudang = async () => {
   return allUser;
 };
 
+// get id gudang
+export const getGudangID = async (us_id) => {
+  const allUser = await Gudang.findOne({
+    where: {
+      user_id: us_id,
+    },
+  });
+  return allUser;
+};
+
 export default Gudang;
