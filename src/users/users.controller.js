@@ -4,6 +4,8 @@ import {
   deleteMitra,
   deletePenitip,
   editProfileMitra,
+  editProfilePenitip,
+  editVerified,
   getProfileMitra,
   getProfilePenitip,
   getUserbyID,
@@ -122,29 +124,30 @@ export const getProfileMitraRest = async (req, res) => {
   });
 };
 
-// //edit verified mitra
-// export const editVerifiedRest = async (req, res) => {
-//   const { verified } = req.body;
-//   const id = req.params.id;
+//edit verified mitra
+export const editVerifiedRest = async (req, res) => {
+  const { verified } = req.body;
+  const id = req.params.id;
 
-//   if (!verified) {
-//     return res.status(400).json({
-//       meta: {
-//         code: 400,
-//         message: "Please set mitra status",
-//       },
-//     });
-//   }
+  if (!verified) {
+    return res.status(400).json({
+      meta: {
+        code: 400,
+        message: "Please set mitra status",
+      },
+    });
+  }
 
-//   const respModel = await editVerified(verified, id);
-//   return res.status(200).json({
-//     meta: {
-//       code: 200,
-//       message: "Success set status mitra",
-//     },
-//     data: { respModel },
-//   });
-// };
+  const respModel = await editVerified(verified, id);
+  console.log("ini respon", respModel);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success set status mitra",
+    },
+    data: {},
+  });
+};
 
 // get profil penitip
 export const getProfilePenitipRest = async (req, res) => {
@@ -213,8 +216,35 @@ export const editProfileMitraRest = async (req, res) => {
   return res.status(200).json({
     meta: {
       code: 200,
-      message: "Success set status mitra",
+      message: "Success edit profile mitra",
     },
-    data: { respModel },
+    data: {},
+  });
+};
+
+//edit profile penitip
+export const editProfilePenitipRest = async (req, res) => {
+  const jwt = req.headers["authorization"];
+  const bearer = jwt.split(" ");
+  const decode = bearer[1];
+  const id = JSONtoken.verify(decode, process.env.JWT_SECRET).id;
+
+  const { name, email, password, no_hp, address, profile_photo } = req.body;
+
+  const respModel = await editProfilePenitip(
+    id,
+    name,
+    email,
+    password,
+    no_hp,
+    address,
+    profile_photo
+  );
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success edit profile penitip",
+    },
+    data: {},
   });
 };

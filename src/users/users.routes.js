@@ -4,11 +4,12 @@ import {
   createUserRest,
   deleteMitraRest,
   deletePenitipRest,
-  // editProfileMitraRest,
+  editProfileMitraRest,
+  editProfilePenitipRest,
+  editVerifiedRest,
   getMitrabyIDRest,
   getMitraUnverifiedRest,
   getMitraVerifiedRest,
-  // editVerifiedRest,
   getProfileMitraRest,
   getProfilePenitipRest,
 } from "./users.controller.js";
@@ -20,8 +21,9 @@ router.get("/mitra/unverified", getMitraUnverifiedRest);
 router.get("/mitra/verified", verifyToken, getMitraVerifiedRest);
 router.get("/mitra/:id", getMitrabyIDRest);
 router.get("/mitra", verifyToken, getProfileMitraRest);
-// router.put("/mitra/verify/:id", editVerifiedRest);
-// router.put("/mitra", verifyToken, editProfileMitraRest);
+router.put("/mitra/verify/:id", editVerifiedRest);
+router.put("/mitra", verifyToken, editProfileMitraRest);
+router.put("/penitip", verifyToken, editProfilePenitipRest);
 router.get("/penitip", verifyToken, getProfilePenitipRest);
 router.delete("/mitra/:id", deleteMitraRest);
 router.delete("/penitip", verifyToken, deletePenitipRest);

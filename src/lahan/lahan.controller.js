@@ -3,6 +3,7 @@ import { getGudangID } from "../gudang/gudang.model.js";
 import {
   createLahan,
   deleteLahan,
+  editLahan,
   getLahanbyID,
   getLahanGudang,
 } from "./lahan.model.js";
@@ -103,5 +104,39 @@ export const deleteLahanRest = async (req, res) => {
       code: 200,
       message: "Success delete lahan",
     },
+  });
+};
+
+export const editLahanRest = async (req, res) => {
+  const id = req.params.id;
+  const {
+    name,
+    harga,
+    luas,
+    lebar,
+    panjang,
+    fasilitas,
+    barang_dilarang,
+    foto_lahan,
+    deskripsi,
+  } = req.body;
+  const respModel = await editLahan(
+    id,
+    name,
+    harga,
+    luas,
+    lebar,
+    panjang,
+    fasilitas,
+    barang_dilarang,
+    foto_lahan,
+    deskripsi
+  );
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success update lahan",
+    },
+    data: {},
   });
 };

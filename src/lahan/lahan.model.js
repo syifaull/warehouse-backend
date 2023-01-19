@@ -116,4 +116,39 @@ export const deleteLahan = async (id) => {
   });
 };
 
+export const editLahan = async (
+  id,
+  un,
+  pr,
+  lu,
+  le,
+  pj,
+  fas,
+  forb,
+  fot_lh,
+  desc,
+  st
+) => {
+  const edit = await Lahan.update(
+    {
+      name: un,
+      harga: pr,
+      luas: lu,
+      lebar: le,
+      panjang: pj,
+      fasilitas: fas,
+      barang_dilarang: forb,
+      foto_lahan: fot_lh,
+      deskripsi: desc,
+      status: st,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  return edit;
+};
+
 export default Lahan;

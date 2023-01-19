@@ -122,15 +122,19 @@ export const getProfileMitra = async (id) => {
   return allUser;
 };
 
-// export const editVerified = async (ver, id) => {
-//   const edit = await Users.update({
-//     verified: ver,
-//     where: {
-//       id: id,
-//     },
-//   });
-//   return edit;
-// };
+export const editVerified = async (ver, id) => {
+  const edit = await Users.update(
+    {
+      verified: ver,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  return edit;
+};
 
 export const getProfilePenitip = async (id) => {
   const allUser = await Users.findOne({
@@ -157,18 +161,41 @@ export const deletePenitip = async (id) => {
   });
 };
 
-export const editProfileMitra = async (un, em, pw, hp, add, pp, id) => {
-  const edit = await Users.update({
-    name: un,
-    email: em,
-    password: pw,
-    no_hp: hp,
-    address: add,
-    profile_photo: pp,
-    where: {
-      id: id,
+export const editProfileMitra = async (id, un, em, pw, hp, add, pp) => {
+  const edit = await Users.update(
+    {
+      name: un,
+      email: em,
+      password: pw,
+      no_hp: hp,
+      address: add,
+      profile_photo: pp,
     },
-  });
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
+  return edit;
+};
+
+export const editProfilePenitip = async (id, un, em, pw, hp, add, pp) => {
+  const edit = await Users.update(
+    {
+      name: un,
+      email: em,
+      password: pw,
+      no_hp: hp,
+      address: add,
+      profile_photo: pp,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
   return edit;
 };
 
