@@ -42,6 +42,7 @@ const Lahan = newSeq.define(
     },
     status: {
       type: DataTypes.STRING,
+      defaultValue: "tidak_disewa",
     },
   },
   {
@@ -86,6 +87,23 @@ export const createLahan = async (
   });
   console.log(un, "'s id: ", create.id);
   return create.id;
+};
+
+export const getLahanbyID = async (id) => {
+  const allUser = await Lahan.findOne({
+    where: {
+      id: id,
+    },
+  });
+  return allUser;
+};
+
+export const deleteLahan = async (id) => {
+  await Lahan.destroy({
+    where: {
+      id: id,
+    },
+  });
 };
 
 export default Lahan;
