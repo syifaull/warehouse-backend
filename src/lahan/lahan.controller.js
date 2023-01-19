@@ -1,6 +1,11 @@
 import JSONtoken from "jsonwebtoken";
 import { getGudangID } from "../gudang/gudang.model.js";
-import { createLahan, deleteLahan, getLahanbyID } from "./lahan.model.js";
+import {
+  createLahan,
+  deleteLahan,
+  getLahanbyID,
+  getLahanGudang,
+} from "./lahan.model.js";
 
 // create new lahan
 export const createLahanRest = async (req, res) => {
@@ -69,6 +74,20 @@ export const getLahanRest = async (req, res) => {
     meta: {
       code: 200,
       message: "Success get detail lahan",
+    },
+    data: { respModel },
+  });
+};
+
+// get daftar lahan dalam gudang
+export const getLahanGudangRest = async (req, res) => {
+  const id = req.params.id;
+
+  const respModel = await getLahanGudang(id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success get daftar lahan",
     },
     data: { respModel },
   });

@@ -98,6 +98,16 @@ export const getLahanbyID = async (id) => {
   return allUser;
 };
 
+export const getLahanGudang = async (id) => {
+  const allUser = await Lahan.findAll({
+    where: {
+      gudang_id: id,
+      status: "tidak_disewa",
+    },
+  });
+  return allUser;
+};
+
 export const deleteLahan = async (id) => {
   await Lahan.destroy({
     where: {
