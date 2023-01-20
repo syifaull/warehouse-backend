@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { newSeq } from "../configs/database.js";
+import Lahan from "../lahan/lahan.model.js";
 
 const Favorites = newSeq.define(
   "favorites",
@@ -43,19 +44,33 @@ export const createFavorite = async (user_id, lahan_id) => {
 };
 
 export const getFavorite = async (id) => {
+  Favorites.hasMany(Lahan);
+  // Lahan.belongsTo(Favorites, {
+  //   foreignKey: "lahan_id",
+  //   as: "lahan"
+  // })
   const allUser = await Favorites.findAll({
     where: {
       user_id: id,
     },
     include: [
       {
-        model: lahans,
-        as: "lahan",
-        attributes: "name",
+        model: Lahan,
+        as: "lahans",
+        required: false,
+        // attributes: ["name", "harga", "foto_lahan"],
       },
     ],
   });
   return allUser;
+};
+
+export const deleteFavorite = async (id) => {
+  await Favorites.destroy({
+    where: {
+      id: id,
+    },
+  });
 };
 
 export default Favorites;

@@ -1,5 +1,9 @@
 import JSONtoken from "jsonwebtoken";
-import { createFavorite } from "./favorite.model.js";
+import {
+  createFavorite,
+  deleteFavorite,
+  getFavorite,
+} from "./favorite.model.js";
 
 // create new favorite
 export const createFavoriteRest = async (req, res) => {
@@ -32,6 +36,7 @@ export const createFavoriteRest = async (req, res) => {
   });
 };
 
+//get favorite
 export const getFavoriteRest = async (req, res) => {
   const jwt = req.headers["authorization"];
   const bearer = jwt.split(" ");
@@ -45,5 +50,18 @@ export const getFavoriteRest = async (req, res) => {
       message: "Success get favorite lahan",
     },
     data: { respModel },
+  });
+};
+
+// delete Favorite
+export const deleteFavoriteRest = async (req, res) => {
+  const id = req.params.id;
+
+  deleteFavorite(id);
+  return res.status(200).json({
+    meta: {
+      code: 200,
+      message: "Success delete favorite",
+    },
   });
 };
