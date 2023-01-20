@@ -26,6 +26,16 @@ export const authLogin = async (req, res) => {
     });
   }
 
+  if (user.role === "mitra" && user.verified === "unverified") {
+    return res.status(401).json({
+      meta: {
+        code: 401,
+        message: "Mitra belum diverifikasi",
+      },
+      data: {},
+    });
+  }
+
   if (user.password === password) {
     const token = jwtController.sign(
       {

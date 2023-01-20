@@ -18,7 +18,7 @@ const router = Router();
 
 router.post("/register", createUserRest);
 router.get("/mitra/unverified", getMitraUnverifiedRest);
-router.get("/mitra/verified", verifyToken, getMitraVerifiedRest);
+router.get("/mitra/verified", getMitraVerifiedRest);
 router.get("/mitra/:id", getMitrabyIDRest);
 router.get("/mitra", verifyToken, getProfileMitraRest);
 router.put("/mitra/verify/:id", editVerifiedRest);
